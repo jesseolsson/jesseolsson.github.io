@@ -1,0 +1,2 @@
+onload = ->
+  alert 'Hello, World!'
