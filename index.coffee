@@ -19,6 +19,8 @@ main = ->
         scene.render()
 
       engine.runRenderLoop(render)
+      armature = scene.getSkeletonByName('Armature')
+      scene.beginAnimation(armature, 1, 250, true, 1.0)
 
     scene.executeWhenReady(onSceneReady)
 

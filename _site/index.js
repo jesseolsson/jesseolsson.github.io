@@ -8,7 +8,7 @@
     onSceneLoad = function(scene) {
       var onSceneReady;
       onSceneReady = function() {
-        var onResize, render;
+        var armature, onResize, render;
         onResize = function() {
           return engine.resize();
         };
@@ -17,7 +17,9 @@
         render = function() {
           return scene.render();
         };
-        return engine.runRenderLoop(render);
+        engine.runRenderLoop(render);
+        armature = scene.getSkeletonByName('Armature');
+        return scene.beginAnimation(armature, 1, 250, true, 1.0);
       };
       return scene.executeWhenReady(onSceneReady);
     };
