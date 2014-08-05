@@ -1,3 +1,7 @@
 ---
 ---
-console.log 'Hello, World!'
+
+main = ->
+  document.body.innerHTML = 'Hello, World!'
+
+window.onload = main

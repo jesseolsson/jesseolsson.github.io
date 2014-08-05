@@ -1,4 +1,10 @@
 (function() {
-  console.log('Hello, World!');
+  var main;
+
+  main = function() {
+    return document.body.innerHTML = 'Hello, World!';
+  };
+
+  window.onload = main;
 
 }).call(this);
