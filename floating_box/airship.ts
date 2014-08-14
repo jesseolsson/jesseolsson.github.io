@@ -13,8 +13,8 @@ module airship{
         defineSkeletons(scene);
 
         // instance all root meshes
-        new Plane("Plane", scene);
         new Cube("Cube", scene);
+        new Plane("Plane", scene);
 
         // define cameras after meshes, incase LockedTarget is in use
         defineCameras  (scene);
@@ -58,6 +58,53 @@ module airship{
         var bone : BABYLON.Bone;
         var animation : BABYLON.Animation;
         bonesLoaded = true;
+    }
+
+    export class Cube extends BABYLON.Mesh {
+        constructor(name: string, scene: BABYLON.Scene) {
+            super(name, scene);
+
+            airship.defineMaterials(scene); //embedded version check
+            console.log('defining mesh: ' + this.name);
+
+            this.id = this.name;
+            this.billboardMode  = 0;
+            this.position.x  = 0;
+            this.position.y  = 3.4393;
+            this.position.z  = 0;
+            this.rotation.x  = 0;
+            this.rotation.y  = 0;
+            this.rotation.z  = 0;
+            this.scaling.x   = 1;
+            this.scaling.y   = 1;
+            this.scaling.z  = 1;
+            this.isVisible       = true;
+            this.checkCollisions = false;
+            this.receiveShadows  = false;
+            if (!scene.isPhysicsEnabled()) {
+            	scene.enablePhysics();
+            }	            this.setPhysicsState({ impostor: 8, mass: 1, friction: 0.5, restitution: 0});
+            this.setVerticesData(BABYLON.VertexBuffer.PositionKind, [
+                -1,1,1,-1,-1,1,-1,-1,-1,1,1,1,1,-1,1,1,1,-1,1,-1,-1,-1,1,-1
+            ],
+            false);
+
+            this.setVerticesData(BABYLON.VertexBuffer.NormalKind, [
+                -0.5773,0.5773,0.5773,-0.5773,-0.5773,0.5773,-0.5773,-0.5773,-0.5773,0.5773,0.5773,0.5773,0.5773,-0.5773,0.5773,0.5773,0.5773,-0.5773,0.5773,-0.5773,-0.5773,-0.5773,0.5773,-0.5773
+            ],
+            false);
+
+            this.setIndices([
+                0,1,2,3,4,1,5,6,4,7,2,6,1,4,6,3,0,7,7,0,2,0,3,1,3,5,4,5,7,6,2,1,6,5,3,7
+            ]);
+
+            this.subMeshes = [];
+            new BABYLON.SubMesh(0, 0, 8, 0, 36, this);
+            this.computeWorldMatrix(true);
+            if (scene._selectionOctree) {
+                scene._selectionOctree.addMesh(this);
+            }
+        }
     }
 
     export class Plane extends BABYLON.Mesh {
@@ -104,51 +151,6 @@ module airship{
         }
     }
 
-    export class Cube extends BABYLON.Mesh {
-        constructor(name: string, scene: BABYLON.Scene) {
-            super(name, scene);
-
-            airship.defineMaterials(scene); //embedded version check
-            console.log('defining mesh: ' + this.name);
-
-            this.setMaterialByID("airship.Material");
-            this.id = this.name;
-            this.billboardMode  = 0;
-            this.position.x  = 0;
-            this.position.y  = 5.0573;
-            this.position.z  = 0;
-            this.rotation.x  = 0.6887;
-            this.rotation.y  = 0.276;
-            this.rotation.z  = -0.3513;
-            this.scaling.x   = 1;
-            this.scaling.y   = 1;
-            this.scaling.z  = 1;
-            this.isVisible       = true;
-            this.checkCollisions = false;
-            this.receiveShadows  = false;
-            this.setVerticesData(BABYLON.VertexBuffer.PositionKind, [
-                1,-1,-1,-1,-1,-1,-1,-1,1,-1,1,1,-1,1,-1,1,1,-1,1,-1,1,1,1,1
-            ],
-            false);
-
-            this.setVerticesData(BABYLON.VertexBuffer.NormalKind, [
-                0.5773,-0.5773,-0.5773,-0.5773,-0.5773,-0.5773,-0.5773,-0.5773,0.5773,-0.5773,0.5773,0.5773,-0.5773,0.5773,-0.5773,0.5773,0.5773,-0.5773,0.5773,-0.5773,0.5773,0.5773,0.5773,0.5773
-            ],
-            false);
-
-            this.setIndices([
-                0,1,2,3,4,5,6,7,5,0,5,4,4,3,2,6,2,3,6,0,2,7,3,5,0,6,5,1,0,4,1,4,2,7,6,3
-            ]);
-
-            this.subMeshes = [];
-            new BABYLON.SubMesh(0, 0, 8, 0, 36, this);
-            this.computeWorldMatrix(true);
-            if (scene._selectionOctree) {
-                scene._selectionOctree.addMesh(this);
-            }
-        }
-    }
-
     export function defineCameras(scene : BABYLON.Scene) : void {
         if (typeof(BABYLON.Engine.Version) === "undefined" || Number(BABYLON.Engine.Version.substr(0, 4)) < 1.13) throw "Babylon version too old";
         console.log('In defineCameras');
@@ -177,7 +179,6 @@ module airship{
         shadowGenerator = new BABYLON.ShadowGenerator(512, light);
         shadowGenerator.useVarianceShadowMap = false;
         renderList = shadowGenerator.getShadowMap().renderList;
-        renderList.push(scene.getMeshByID("Cube"));
     }
 
 }

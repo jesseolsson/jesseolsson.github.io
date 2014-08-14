@@ -4,6 +4,14 @@
 	WARNING: No active camera has been assigned, or is not in a currently selected Blender layer
 	processing begun of material:  airship.Material
 	WARNING texture type not currently supported:  NONE, ignored.
+	processing begun of mesh:  Cube
+		WARNING:  No materials have been assigned: 
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
 	processing begun of light:  Sun
 	processing begun of shadows for light:  Sun
 	processing begun of mesh:  Plane
@@ -14,13 +22,6 @@
 		num uvs2           :  0
 		num colors         :  0
 		num indices        :  6
-	processing begun of mesh:  Cube
-		num positions      :  8
-		num normals        :  8
-		num uvs            :  0
-		num uvs2           :  0
-		num colors         :  0
-		num indices        :  36
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= Writing of typescript file started =========
