@@ -37,9 +37,29 @@ function codeScene(scene) {
   var poles = scene.getMeshByName('cafe_poles')
   var canopy = scene.getMeshByName('cafe_canopy')
   var ground = scene.getMeshByName('ground')
+  var fountainPool = scene.getMeshByName('fountain_pool')
 
   scene.activeCamera.attachControl($('canvas'))
   scene.activeCamera.maxZ = 2000
+
+  var fountainStart = new BABYLON.Vector3(14.36917, -10.2, 27.90984)
+  var fountainP = new BABYLON.ParticleSystem('fountainP', 20000, scene)
+  fountainP.emitRate = 21000
+  fountainP.gravity = new BABYLON.Vector3(0, -75, 0)
+  fountainP.emitter = fountainStart
+  fountainP.particleTexture = new BABYLON.Texture('textures/fountain_water.png', scene)
+  fountainP.color1 = new BABYLON.Color4(.5, .5, .5, .5)
+  fountainP.color2 = new BABYLON.Color4(.4, .4, .5, .5)
+  fountainP.colorDead = new BABYLON.Color4(.8, .8, .8, .8)
+  fountainP.minSize = .08
+  fountainP.maxSize = .08
+  fountainP.minLifeTime = .8
+  fountainP.maxLifeTime = .8
+  fountainP.minEmitPower = 5;
+  fountainP.maxEmitPower = 5;
+  fountainP.direction1 = new BABYLON.Vector3(-1.4, 4, -1.4)
+  fountainP.direction2 = new BABYLON.Vector3(1.4, 4, 1.4)
+  fountainP.start()
 
   var windowMaterial = new BABYLON.StandardMaterial('window', scene)
   windowMaterial.reflectionTexture = new BABYLON.MirrorTexture('mirror', 512, scene, true)
