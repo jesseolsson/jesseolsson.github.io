@@ -4,6 +4,7 @@ window.addEventListener('load', function() {
   BABYLON.SceneLoader.Load('', 'game.babylon', engine, function(scene) {
     scene.executeWhenReady(function() {
       scene.activeCamera.attachControl(canvas)
+      scene.activeCamera.maxZ = 200
       engine.runRenderLoop(function() {
         scene.render()
       })
